@@ -22,7 +22,6 @@ SITE = {
     "name": "Dimensure",
     "url": "https://dimensure.co.uk",
     "email": "info@dimensure.co.uk",
-    # Placeholder number from Ofcom's reserved drama range - swap for the real line before going live.
     "tagline": "Measured. Checked. Recorded.",
     "base": "Corby, Northamptonshire",
 }
@@ -48,6 +47,9 @@ SERVICES = [
     ("garden-landscape-scanning.html", "Garden & landscape scanning",
      "Every level, wall, tree and step captured for landscape designers and builders.",
      "garden-scan", "garden-scan-cost.html"),
+    ("survey-data-reporting.html", "Reporting from your survey data",
+     "Already have a scan or your engineer's levels? We process your data and report against design, no visit needed.",
+     "report-tablet", None),
 ]
 
 COST_LABEL = {
@@ -105,7 +107,8 @@ def service_cards(exclude=None, heading_level="h3"):
             f'{img(image, name + " - Dimensure laser scanning", sizes="(max-width: 700px) 100vw, 33vw")}</a>'
             f'<div class="card-body"><{heading_level}><a href="{slug}">{name}</a></{heading_level}>'
             f'<p>{blurb}</p><p class="card-links"><a href="{slug}">How it works</a>'
-            f'<a href="{cost}">Prices</a></p></div></article>')
+            + (f'<a href="{cost}">Prices</a>' if cost else '<a href="contact.html">Get a price</a>')
+            + '</p></div></article>')
     out.append('</div>')
     return "".join(out)
 
@@ -117,7 +120,7 @@ def area_links(current=None):
 
 def cost_links():
     return '<ul class="pill-list">' + "".join(
-        f'<li><a href="{c}">{COST_LABEL[c]}</a></li>' for *_, c in SERVICES) + '</ul>'
+        f'<li><a href="{c}">{COST_LABEL[c]}</a></li>' for *_, c in SERVICES if c) + '</ul>'
 
 
 MACROS = {
@@ -182,7 +185,7 @@ def header(active):
 
 def footer():
     svc = "".join(f'<li><a href="{s}">{n}</a></li>' for s, n, *_ in SERVICES)
-    cst = "".join(f'<li><a href="{c}">{COST_LABEL[c]}</a></li>' for *_, c in SERVICES)
+    cst = "".join(f'<li><a href="{c}">{COST_LABEL[c]}</a></li>' for *_, c in SERVICES if c)
     ars = "".join(f'<li><a href="{s}">Laser scanning {n}</a></li>' for s, n in AREAS)
     return f'''<footer class="site-footer"><div class="wrap">
 <div class="foot-top"><a class="brand" href="index.html" aria-label="Dimensure home">{LOGO}</a>
@@ -213,13 +216,15 @@ def org_schema():
         "image": SITE["url"] + "/images/hero-scanner-oversite-1536.webp",
         "slogan": SITE["tagline"],
         "description": ("3D laser scanning and construction quality-control surveys: road and sub-base scanning, "
-                        "tarmac depth surveys, plot and oversite checks, measured building surveys and garden scans."),
+                        "tarmac depth surveys, plot and oversite checks, measured building surveys and garden scans, "
+                        "plus QC reporting from survey data supplied by the client's own engineer."),
         "address": {"@type": "PostalAddress", "addressLocality": "Corby",
                     "addressRegion": "Northamptonshire", "addressCountry": "GB"},
         "areaServed": [{"@type": "Place", "name": a} for a in AREA_SERVED],
         "knowsAbout": ["Groundworks design review", "Terrestrial laser scanning", "Point cloud surveys", "Sub-base level checks",
                        "Asphalt layer thickness verification", "Slab flatness surveys",
-                       "Measured building surveys", "Garden and landscape surveys", "Groundworks quality control"],
+                       "Measured building surveys", "Garden and landscape surveys", "Groundworks quality control",
+                       "Point cloud processing", "Survey data QC reporting"],
         "openingHoursSpecification": {"@type": "OpeningHoursSpecification",
                                       "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
                                       "opens": "07:30", "closes": "17:30"},
@@ -375,7 +380,7 @@ def main():
         f"Sitemap: {SITE['url']}/sitemap.xml\n")
     llms = (SRC / "llms-intro.md").read_text().replace("{{EMAIL}}", SITE["email"])
     groups = [("Services", [s for s, *_ in SERVICES] + ["services.html"]),
-              ("Prices", [c for *_, c in SERVICES] + ["prices.html"]),
+              ("Prices", [c for *_, c in SERVICES if c] + ["prices.html"]),
               ("Areas", [s for s, _ in AREAS] + ["areas.html"])]
     used = set()
     for title, slugs in groups:
