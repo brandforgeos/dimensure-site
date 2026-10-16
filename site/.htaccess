@@ -1,3 +1,8 @@
+# Always use https://dimensure.co.uk (no www)
+RewriteEngine On
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://dimensure.co.uk%{REQUEST_URI} [L,R=301]
 RedirectMatch 404 /\.git
 DirectoryIndex index.html
 ErrorDocument 404 /404.html
