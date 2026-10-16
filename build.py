@@ -27,8 +27,6 @@ SITE = {
     "phone_e164": "+441632960247",
     "tagline": "Measured. Checked. Recorded.",
     "base": "Corby, Northamptonshire",
-    # Web3Forms access key for info@dimensure.co.uk - create one at web3forms.com and paste it here.
-    "web3forms_key": "REPLACE_WITH_DIMENSURE_WEB3FORMS_KEY",
 }
 TODAY = datetime.date.today().isoformat()
 
@@ -133,7 +131,7 @@ MACROS = {
     "{{EMAIL}}": lambda meta: f'<a href="mailto:{SITE["email"]}">{SITE["email"]}</a>',
     "{{CTA}}": lambda meta: cta_block(meta),
     "{{SAMPLE_VIEWER}}": lambda meta: viewer_block(meta.get("viewer", "road")),
-    "{{WEB3FORMS_KEY}}": lambda meta: SITE["web3forms_key"],
+    "{{EMAIL_TEXT}}": lambda meta: SITE["email"],
 }
 
 

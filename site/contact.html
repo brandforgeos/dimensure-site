@@ -46,11 +46,9 @@
 <section class="section tight">
  <div class="wrap split top">
   <div class="panel">
-   <form class="form" action="https://api.web3forms.com/submit" method="POST">
-    <input type="hidden" name="access_key" value="REPLACE_WITH_DIMENSURE_WEB3FORMS_KEY">
-    <input type="hidden" name="subject" value="New Dimensure enquiry">
-    <input type="hidden" name="from_name" value="dimensure.co.uk">
-    <input type="checkbox" name="botcheck" class="hp" style="display:none" tabindex="-1" autocomplete="off">
+   <form class="form" id="enquiry-form" action="enquiry.php" method="POST">
+    <input type="hidden" name="page" value="contact">
+    <div class="hp" aria-hidden="true" style="position:absolute;left:-9999px"><label for="website">Leave blank</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
     <div class="row">
      <div><label for="name">Name</label><input id="name" name="name" autocomplete="name" required></div>
      <div><label for="company">Company (if any)</label><input id="company" name="company" autocomplete="organization"></div>
@@ -74,11 +72,19 @@
    </form>
    <script>
    (function(){
-     // Off the live domain (previews, local files) the form shows a notice instead of sending.
-     var f=document.querySelector('.form'),st=document.getElementById('form-status');
-     if(!/(^|\.)dimensure\.co\.uk$/.test(location.hostname)){
-       f.addEventListener('submit',function(e){e.preventDefault();st.hidden=false;st.textContent='Preview only: on dimensure.co.uk this form sends your enquiry to info@dimensure.co.uk.';});
-     }
+     var f=document.getElementById('enquiry-form'),st=document.getElementById('form-status'),b=f.querySelector('button[type=submit]');
+     f.addEventListener('submit',function(e){
+       e.preventDefault();
+       b.disabled=true;b.textContent='Sending...';st.hidden=true;
+       fetch(f.action,{method:'POST',body:new FormData(f)})
+         .then(function(r){return r.json();})
+         .then(function(j){
+           if(!j.ok)throw new Error('send');
+           f.reset();st.hidden=false;st.textContent='Thanks, we have your enquiry and will reply the same working day.';
+         })
+         .catch(function(){st.hidden=false;st.textContent='That did not send. Please email info@dimensure.co.uk instead.';})
+         .finally(function(){b.disabled=false;b.textContent='Send enquiry';});
+     });
    })();
    </script>
   </div>
