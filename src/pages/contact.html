@@ -1,0 +1,77 @@
+<!--META
+{
+ "title": "Contact Dimensure | Book a Laser Scan or Get a Fixed Price",
+ "description": "Book a 3D laser scan or get a fixed price. Send your drawings and site details for a same-working-day reply. Based in Corby, Northamptonshire.",
+ "image": "road-subbase-scan",
+ "crumbs": [["Contact","contact.html"]],
+ "page_type": "ContactPage",
+ "priority": "0.7",
+ "no_cta": true
+}
+-->
+<section class="page-hero">
+ <div class="wrap narrow">
+  <p class="eyebrow">Contact</p>
+  <h1>Book a scan or get a fixed price</h1>
+  <p class="lead">Tell us what needs checking or surveying and when. We reply the same working day with a fixed price and the earliest date we can do it.</p>
+ </div>
+</section>
+
+<section class="section tight">
+ <div class="wrap split top">
+  <div class="panel">
+   <form class="form" action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="{{WEB3FORMS_KEY}}">
+    <input type="hidden" name="subject" value="New Dimensure enquiry">
+    <input type="hidden" name="from_name" value="dimensure.co.uk">
+    <input type="checkbox" name="botcheck" class="hp" style="display:none" tabindex="-1" autocomplete="off">
+    <div class="row">
+     <div><label for="name">Name</label><input id="name" name="name" autocomplete="name" required></div>
+     <div><label for="company">Company (if any)</label><input id="company" name="company" autocomplete="organization"></div>
+    </div>
+    <div class="row">
+     <div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+     <div><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel"></div>
+    </div>
+    <div class="row">
+     <div><label for="service">Service</label>
+      <select id="service" name="service">
+       <option>Road &amp; sub-base scanning</option><option>Tarmac depth survey</option><option>Plot &amp; oversite scanning</option>
+       <option>3D measured building survey</option><option>Garden &amp; landscape scan</option><option>Design audit (drawing review)</option><option>Not sure yet</option>
+      </select></div>
+     <div><label for="location">Site town or postcode</label><input id="location" name="location" autocomplete="postal-code"></div>
+    </div>
+    <div><label for="message">What needs checking or surveying?</label><textarea id="message" name="message" placeholder="E.g. 250 m estate road at sub-base, need it checked before binder next Thursday. Or: kitchen-diner in a 1930s semi, need plans and elevations for a kitchen designer." required></textarea></div>
+    <p class="note" style="margin:0">Drawings can be emailed to {{EMAIL}} after you send this. We use your details only to reply to your enquiry; see our <a href="privacy.html">privacy notice</a>.</p>
+    <button class="btn" type="submit">Send enquiry</button>
+    <p class="form-status" id="form-status" role="status" hidden></p>
+   </form>
+   <script>
+   (function(){
+     // Off the live domain (previews, local files) the form shows a notice instead of sending.
+     var f=document.querySelector('.form'),st=document.getElementById('form-status');
+     if(!/(^|\.)dimensure\.co\.uk$/.test(location.hostname)){
+       f.addEventListener('submit',function(e){e.preventDefault();st.hidden=false;st.textContent='Preview only: on dimensure.co.uk this form sends your enquiry to info@dimensure.co.uk.';});
+     }
+   })();
+   </script>
+  </div>
+  <div class="prose">
+   <h2>Other ways to reach us</h2>
+   <dl class="facts" style="grid-template-columns:1fr">
+    <div><dt>Phone</dt><dd>{{PHONE}}</dd></div>
+    <div><dt>Email</dt><dd>{{EMAIL}}</dd></div>
+    <div><dt>Hours</dt><dd>Mon&ndash;Fri, 7:30am&ndash;5:30pm</dd></div>
+    <div><dt>Based in</dt><dd>Corby, Northamptonshire</dd></div>
+   </dl>
+   <h3>To give you an accurate price, it helps to know</h3>
+   <ul>
+    <li>The site address or postcode.</li>
+    <li>What needs checking: which road, how many plots, which rooms or how big the garden is.</li>
+    <li>The drawings and the tolerance you work to, for site QC.</li>
+    <li>When you need it by.</li>
+   </ul>
+   <p>Prices for each service are published in the <a href="prices.html">price guide</a>.</p>
+  </div>
+ </div>
+</section>

@@ -1,0 +1,7 @@
+---
+# HostGator (cPanel Git) deployment: copies the built site into the dimensure.co.uk web root.
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home1/sufktgte/public_html/dimensure.co.uk/
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -Rf site/. $DEPLOYPATH
