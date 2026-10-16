@@ -1,7 +1,3 @@
-# Held out of search until launch details (phone, form key) are in. Remove this block at launch.
-<IfModule mod_headers.c>
-Header set X-Robots-Tag "noindex, nofollow"
-</IfModule>
 RedirectMatch 404 /\.git
 DirectoryIndex index.html
 ErrorDocument 404 /404.html

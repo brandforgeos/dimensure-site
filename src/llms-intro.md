@@ -12,4 +12,4 @@ Key facts:
 - Guide prices (before VAT): plot checks from £85 per plot (4+ plots per visit); road scans from £495 per visit; tarmac depth surveys from £895 per section; measured building surveys from £325; garden scans from £395.
 - Scope note: plot checks do not verify plot position on the site grid or level to site datum; those remain with the site engineer.
 - Set up by a groundworks project manager with 12 years on UK housing sites (NVQ Level 6 Construction Contracting Operations Management, SMSTS, CSCS Black card).
-- Contact: {{PHONE}}, {{EMAIL}}, https://dimensure.co.uk/contact.html
+- Contact: {{EMAIL}}, https://dimensure.co.uk/contact.html

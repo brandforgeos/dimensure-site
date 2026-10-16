@@ -23,8 +23,6 @@ SITE = {
     "url": "https://dimensure.co.uk",
     "email": "info@dimensure.co.uk",
     # Placeholder number from Ofcom's reserved drama range - swap for the real line before going live.
-    "phone": "01632 960247",
-    "phone_e164": "+441632960247",
     "tagline": "Measured. Checked. Recorded.",
     "base": "Corby, Northamptonshire",
 }
@@ -127,7 +125,6 @@ MACROS = {
     "{{ALL_SERVICE_CARDS}}": lambda meta: service_cards(),
     "{{AREA_LINKS}}": lambda meta: area_links(meta.get("_slug")),
     "{{COST_LINKS}}": lambda meta: cost_links(),
-    "{{PHONE}}": lambda meta: f'<a href="tel:{SITE["phone_e164"]}">{SITE["phone"]}</a>',
     "{{EMAIL}}": lambda meta: f'<a href="mailto:{SITE["email"]}">{SITE["email"]}</a>',
     "{{CTA}}": lambda meta: cta_block(meta),
     "{{SAMPLE_VIEWER}}": lambda meta: viewer_block(meta.get("viewer", "road")),
@@ -140,7 +137,7 @@ def cta_block(meta):
     return (f'<section class="cta"><div class="wrap cta-in"><div><h2>{t}</h2>'
             f'<p>Send the drawing, the location and when you need it. We reply the same working day with a fixed price.</p></div>'
             f'<div class="cta-actions"><a class="btn" href="contact.html">Get a fixed price</a>'
-            f'<a class="btn ghost" href="tel:{SITE["phone_e164"]}">Call {SITE["phone"]}</a></div></div></section>')
+            f'<a class="btn ghost" href="mailto:{SITE["email"]}">Email {SITE["email"]}</a></div></div></section>')
 
 
 def viewer_block(kind):
@@ -195,7 +192,6 @@ def footer():
 <div><h2>Prices</h2><ul>{cst}<li><a href="prices.html">Price guide</a></li></ul></div>
 <div><h2>Areas</h2><ul>{ars}<li><a href="areas.html">All areas</a></li></ul></div>
 <div><h2>Contact</h2><ul class="nap">
-<li><a href="tel:{SITE["phone_e164"]}">{SITE["phone"]}</a></li>
 <li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li>
 <li>Based in {SITE["base"]}</li>
 <li><a href="how-it-works.html">How it works</a></li><li><a href="about.html">About Dimensure</a></li>
@@ -213,7 +209,6 @@ def org_schema():
         "name": SITE["name"],
         "url": SITE["url"] + "/",
         "email": SITE["email"],
-        "telephone": SITE["phone_e164"],
         "logo": SITE["url"] + "/images/dimensure-logo.png",
         "image": SITE["url"] + "/images/hero-scanner-oversite-1536.webp",
         "slogan": SITE["tagline"],
@@ -378,7 +373,7 @@ def main():
         "User-agent: ClaudeBot\nAllow: /\n\nUser-agent: Claude-SearchBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\n"
         "User-agent: Google-Extended\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\n"
         f"Sitemap: {SITE['url']}/sitemap.xml\n")
-    llms = (SRC / "llms-intro.md").read_text().replace("{{PHONE}}", SITE["phone"]).replace("{{EMAIL}}", SITE["email"])
+    llms = (SRC / "llms-intro.md").read_text().replace("{{EMAIL}}", SITE["email"])
     groups = [("Services", [s for s, *_ in SERVICES] + ["services.html"]),
               ("Prices", [c for *_, c in SERVICES] + ["prices.html"]),
               ("Areas", [s for s, _ in AREAS] + ["areas.html"])]

@@ -6,7 +6,7 @@ Static site for https://dimensure.co.uk, hosted on HostGator and deployed with c
 - `src/assets/`: stylesheet and the sample point-cloud viewer.
 - `src/static/`: favicons and `.htaccess`, copied to the site root.
 - `images/`: WebP images (1536 and 768 px).
-- `build.py`: builds everything into `site/`, including `sitemap.xml`, `robots.txt` and `llms.txt`. Phone number, email and the Web3Forms key are set in the `SITE` block at the top.
+- `build.py`: builds everything into `site/`, including `sitemap.xml`, `robots.txt` and `llms.txt`. Email and form settings are set in the `SITE` block at the top.
 
 ## Updating the site
 
@@ -15,7 +15,7 @@ Static site for https://dimensure.co.uk, hosted on HostGator and deployed with c
 3. Commit everything, including `site/`, and push to `main`.
 4. In cPanel > Git Version Control, pull and deploy `dimensure-site` (or call the VersionControl/VersionControlDeployment API).
 
-## Before launch
+## Launch status
 
-- Replace the placeholder phone number and add the Web3Forms key in `build.py`.
-- Remove the `X-Robots-Tag noindex` block from `src/static/.htaccess`.
+- Live and indexable (noindex header removed 16/10/2026).
+- No phone number is published anywhere on the site, in schema or in llms.txt: contact is by the form and email only.
