@@ -3,6 +3,19 @@ RewriteEngine On
 RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteRule ^ https://dimensure.co.uk%{REQUEST_URI} [L,R=301]
+# Old URLs (renamed Oct 2026 to target survey searches)
+Redirect 301 /road-scanning.html https://dimensure.co.uk/road-level-surveys.html
+Redirect 301 /road-scanning-cost.html https://dimensure.co.uk/road-level-survey-cost.html
+Redirect 301 /plot-oversite-scanning.html https://dimensure.co.uk/plot-oversite-surveys.html
+Redirect 301 /plot-scan-cost.html https://dimensure.co.uk/plot-survey-cost.html
+Redirect 301 /garden-landscape-scanning.html https://dimensure.co.uk/garden-surveys.html
+Redirect 301 /garden-scan-cost.html https://dimensure.co.uk/garden-survey-cost.html
+Redirect 301 /laser-scanning-corby-kettering.html https://dimensure.co.uk/surveys-corby-kettering.html
+Redirect 301 /laser-scanning-northampton.html https://dimensure.co.uk/surveys-northampton.html
+Redirect 301 /laser-scanning-milton-keynes.html https://dimensure.co.uk/surveys-milton-keynes.html
+Redirect 301 /laser-scanning-leicester.html https://dimensure.co.uk/surveys-leicester.html
+Redirect 301 /laser-scanning-peterborough-stamford.html https://dimensure.co.uk/surveys-peterborough-stamford.html
+Redirect 301 /laser-scanning-rutland.html https://dimensure.co.uk/surveys-rutland.html
 RedirectMatch 404 /\.git
 DirectoryIndex index.html
 ErrorDocument 404 /404.html

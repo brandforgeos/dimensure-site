@@ -29,45 +29,57 @@ TODAY = datetime.date.today().isoformat()
 
 SERVICES = [
     # slug, short name, card blurb, image, cost page
-    ("road-scanning.html", "Road & sub-base scanning",
+    ("road-level-surveys.html", "Road & sub-base level surveys",
      "Sub-base and binder checked against the road design before the next layer goes on.",
-     "road-subbase-scan", "road-scanning-cost.html"),
+     "road-subbase-scan", "road-level-survey-cost.html"),
     ("tarmac-depth-surveys.html", "Tarmac depth surveys",
      "Before-and-after scans that map the thickness actually laid, across the whole road.",
      "road-tarmac-scan", "tarmac-depth-survey-cost.html"),
-    ("plot-oversite-scanning.html", "Plot & oversite scanning",
+    ("plot-oversite-surveys.html", "Plot & oversite surveys",
      "Slab flatness, brickwork to drawing and drain collar positions, checked plot by plot.",
-     "hero-scanner-oversite", "plot-scan-cost.html"),
+     "hero-scanner-oversite", "plot-survey-cost.html"),
+    ("as-built-surveys.html", "As-built surveys",
+     "Finished roads, kerbs, drainage covers and plots recorded, with as-built drawings in DWG and PDF.",
+     "as-built-survey", "as-built-survey-cost.html"),
+    ("floor-flatness-surveys.html", "Floor flatness surveys",
+     "Slabs and screeds scanned edge to edge and checked against SR1-SR3 or your flatness class.",
+     "floor-flatness", "floor-flatness-survey-cost.html"),
     ("measured-building-surveys.html", "3D measured building surveys",
-     "Millimetre-accurate scans of rooms and buildings for kitchens, extensions and interiors.",
+     "Millimetre-accurate floor plans and elevations for kitchens, extensions and architects.",
      "interior-scan", "measured-building-survey-cost.html"),
+    ("topographical-surveys.html", "Topographical surveys",
+     "Levels, contours, boundaries, buildings and trees for planning and design, with the full 3D scan.",
+     "topographical-survey", "topographical-survey-cost.html"),
     ("groundworks-design-audit.html", "Dimensure Design Audit",
      "Groundworks and civils drawings reviewed before you dig, on any project: problems found on paper.",
      "design-audit", "groundworks-design-audit-cost.html"),
-    ("garden-landscape-scanning.html", "Garden & landscape scanning",
-     "Every level, wall, tree and step captured for landscape designers and builders.",
-     "garden-scan", "garden-scan-cost.html"),
+    ("garden-surveys.html", "Garden surveys",
+     "Levels, walls, steps, trees and drains surveyed for garden designers, landscapers and homeowners.",
+     "garden-scan", "garden-survey-cost.html"),
     ("survey-data-reporting.html", "Reporting from your survey data",
      "Already have a scan or your engineer's levels? We process your data and report against design, no visit needed.",
      "report-tablet", None),
 ]
 
 COST_LABEL = {
-    "road-scanning-cost.html": "Road scanning cost",
+    "road-level-survey-cost.html": "Road level survey cost",
     "tarmac-depth-survey-cost.html": "Tarmac depth survey cost",
-    "plot-scan-cost.html": "Plot scan cost",
+    "plot-survey-cost.html": "Plot survey cost",
     "measured-building-survey-cost.html": "Measured building survey cost",
-    "garden-scan-cost.html": "Garden scan cost",
+    "garden-survey-cost.html": "Garden survey cost",
+    "topographical-survey-cost.html": "Topographical survey cost",
+    "as-built-survey-cost.html": "As-built survey cost",
+    "floor-flatness-survey-cost.html": "Floor flatness survey cost",
     "groundworks-design-audit-cost.html": "Design audit cost",
 }
 
 AREAS = [
-    ("laser-scanning-corby-kettering.html", "Corby & Kettering"),
-    ("laser-scanning-northampton.html", "Northampton"),
-    ("laser-scanning-milton-keynes.html", "Milton Keynes"),
-    ("laser-scanning-leicester.html", "Leicester & Leicestershire"),
-    ("laser-scanning-peterborough-stamford.html", "Peterborough & Stamford"),
-    ("laser-scanning-rutland.html", "Rutland"),
+    ("surveys-corby-kettering.html", "Corby & Kettering"),
+    ("surveys-northampton.html", "Northampton"),
+    ("surveys-milton-keynes.html", "Milton Keynes"),
+    ("surveys-leicester.html", "Leicester & Leicestershire"),
+    ("surveys-peterborough-stamford.html", "Peterborough & Stamford"),
+    ("surveys-rutland.html", "Rutland"),
 ]
 
 AREA_SERVED = ["Corby", "Kettering", "Wellingborough", "Northampton", "Milton Keynes",
@@ -104,7 +116,7 @@ def service_cards(exclude=None, heading_level="h3"):
             continue
         out.append(
             f'<article class="card"><a class="card-img" href="{slug}" tabindex="-1" aria-hidden="true">'
-            f'{img(image, name + " - Dimensure laser scanning", sizes="(max-width: 700px) 100vw, 33vw")}</a>'
+            f'{img(image, name + " - Dimensure laser scan surveys", sizes="(max-width: 700px) 100vw, 33vw")}</a>'
             f'<div class="card-body"><{heading_level}><a href="{slug}">{name}</a></{heading_level}>'
             f'<p>{blurb}</p><p class="card-links"><a href="{slug}">How it works</a>'
             + (f'<a href="{cost}">Prices</a>' if cost else '<a href="contact.html">Get a price</a>')
@@ -186,7 +198,7 @@ def header(active):
 def footer():
     svc = "".join(f'<li><a href="{s}">{n}</a></li>' for s, n, *_ in SERVICES)
     cst = "".join(f'<li><a href="{c}">{COST_LABEL[c]}</a></li>' for *_, c in SERVICES if c)
-    ars = "".join(f'<li><a href="{s}">Laser scanning {n}</a></li>' for s, n in AREAS)
+    ars = "".join(f'<li><a href="{s}">Surveys in {n}</a></li>' for s, n in AREAS)
     return f'''<footer class="site-footer"><div class="wrap">
 <div class="foot-top"><a class="brand" href="index.html" aria-label="Dimensure home">{LOGO}</a>
 <p class="foot-tag">{SITE["tagline"]}</p></div>
@@ -200,7 +212,7 @@ def footer():
 <li><a href="how-it-works.html">How it works</a></li><li><a href="about.html">About Dimensure</a></li>
 <li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
 </div>
-<p class="legal">&copy; {datetime.date.today().year} Dimensure. 3D laser scanning and construction QC surveys across the Midlands and the UK.</p>
+<p class="legal">&copy; {datetime.date.today().year} Dimensure. Laser scan surveys, measured building surveys, topographical and construction QC surveys across the Midlands and the UK.</p>
 </div></footer>
 <a class="mobile-bar" href="contact.html">Get a fixed price</a>'''
 
@@ -215,15 +227,16 @@ def org_schema():
         "logo": SITE["url"] + "/images/dimensure-logo.png",
         "image": SITE["url"] + "/images/hero-scanner-oversite-1536.webp",
         "slogan": SITE["tagline"],
-        "description": ("3D laser scanning and construction quality-control surveys: road and sub-base scanning, "
-                        "tarmac depth surveys, plot and oversite checks, measured building surveys and garden scans, "
+        "description": ("Laser scan survey company: measured building surveys, topographical and garden level surveys, "
+                        "road and sub-base level surveys, tarmac depth surveys, plot and oversite as-built surveys "
+                        "and groundworks design audits, "
                         "plus QC reporting from survey data supplied by the client's own engineer."),
         "address": {"@type": "PostalAddress", "addressLocality": "Corby",
                     "addressRegion": "Northamptonshire", "addressCountry": "GB"},
         "areaServed": [{"@type": "Place", "name": a} for a in AREA_SERVED],
         "knowsAbout": ["Groundworks design review", "Terrestrial laser scanning", "Point cloud surveys", "Sub-base level checks",
                        "Asphalt layer thickness verification", "Slab flatness surveys",
-                       "Measured building surveys", "Garden and landscape surveys", "Groundworks quality control",
+                       "Measured building surveys", "Topographical surveys", "Garden level surveys", "As-built surveys", "Laser scan surveys", "3D laser scanning", "Groundworks quality control",
                        "Point cloud processing", "Survey data QC reporting"],
         "openingHoursSpecification": {"@type": "OpeningHoursSpecification",
                                       "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
