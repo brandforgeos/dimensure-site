@@ -171,7 +171,7 @@ def viewer_block(kind):
 
 
 def nav(active):
-    items = [("services.html", "Services"), ("prices.html", "Prices"), ("areas.html", "Areas"),
+    items = [("services.html", "Services"), ("prices.html", "Prices"), ("case-studies.html", "Case studies"), ("areas.html", "Areas"),
              ("how-it-works.html", "How it works"), ("about.html", "About"), ("faq.html", "FAQ")]
     li = []
     for href, label in items:
@@ -209,7 +209,7 @@ def footer():
 <div><h2>Contact</h2><ul class="nap">
 <li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li>
 <li>Based in {SITE["base"]}</li>
-<li><a href="how-it-works.html">How it works</a></li><li><a href="about.html">About Dimensure</a></li>
+<li><a href="case-studies.html">Case studies</a></li><li><a href="how-it-works.html">How it works</a></li><li><a href="about.html">About Dimensure</a></li>
 <li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
 </div>
 <p class="legal">&copy; {datetime.date.today().year} Dimensure. Laser scan surveys, measured building surveys, topographical and construction QC surveys across the Midlands and the UK.</p>
@@ -362,6 +362,8 @@ def main():
     OUT.mkdir()
     shutil.copytree(SRC / "assets", OUT / "assets")
     shutil.copytree(ROOT / "images", OUT / "images")
+    if (SRC / "downloads").exists():
+        shutil.copytree(SRC / "downloads", OUT / "downloads")
     for f in (SRC / "static").iterdir():
         shutil.copy(f, OUT / f.name)
     urls = []
@@ -394,7 +396,8 @@ def main():
     llms = (SRC / "llms-intro.md").read_text().replace("{{EMAIL}}", SITE["email"])
     groups = [("Services", [s for s, *_ in SERVICES] + ["services.html"]),
               ("Prices", [c for *_, c in SERVICES if c] + ["prices.html"]),
-              ("Areas", [s for s, _ in AREAS] + ["areas.html"])]
+              ("Areas", [s for s, _ in AREAS] + ["areas.html"]),
+              ("Case studies", ["case-studies.html", "case-study-missing-road-gullies.html"])]
     used = set()
     for title, slugs in groups:
         llms += f"\n## {title}\n\n"
