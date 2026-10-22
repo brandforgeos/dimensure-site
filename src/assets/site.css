@@ -278,3 +278,4 @@ td.price{font-weight:600;color:var(--mint);white-space:nowrap}
 .cs-card-stat{font-size:1.6rem;font-weight:700;color:var(--mint);margin:0 0 4px;line-height:1.1}
 .section.light .cs-card-stat{color:#1F6E5A}
 @media (max-width:700px){.figpair{grid-template-columns:1fr}.ladder li{grid-template-columns:1fr;gap:6px}}
+.split img.portrait{aspect-ratio:auto;height:auto;object-fit:contain}

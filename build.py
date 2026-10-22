@@ -397,7 +397,7 @@ def main():
     groups = [("Services", [s for s, *_ in SERVICES] + ["services.html"]),
               ("Prices", [c for *_, c in SERVICES if c] + ["prices.html"]),
               ("Areas", [s for s, _ in AREAS] + ["areas.html"]),
-              ("Case studies", ["case-studies.html", "case-study-missing-road-gullies.html"])]
+              ("Case studies", ["case-studies.html", "case-study-missing-road-gullies.html", "case-study-tarmac-thickness.html"])]
     used = set()
     for title, slugs in groups:
         llms += f"\n## {title}\n\n"
