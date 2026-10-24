@@ -280,3 +280,11 @@ td.price{font-weight:600;color:var(--mint);white-space:nowrap}
 .section.light .cs-card-stat{color:#1F6E5A}
 @media (max-width:700px){.figpair{grid-template-columns:1fr}.ladder li{grid-template-columns:1fr;gap:6px}}
 .split img.portrait{aspect-ratio:auto;height:auto;object-fit:contain}
+
+/* Surface water flow model embed (click to load) */
+.flow-embed{position:relative;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#071820;aspect-ratio:3/2}
+.flow-embed img{width:100%;height:100%;object-fit:cover;display:block;opacity:.85}
+.flow-embed .flow-load{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 8px 30px rgba(0,0,0,.45);white-space:nowrap}
+.flow-embed.live{aspect-ratio:auto;height:min(88vh,980px)}
+.flow-embed iframe{display:block;width:100%;height:100%;border:0}
+@media (max-width:700px){.flow-embed.live{height:92vh}}

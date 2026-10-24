@@ -53,6 +53,9 @@ SERVICES = [
     ("groundworks-design-audit.html", "Dimensure Design Audit",
      "Groundworks and civils drawings reviewed before you dig, on any project: problems found on paper.",
      "design-audit", "groundworks-design-audit-cost.html"),
+    ("surface-water-flow-testing.html", "Surface water flow testing",
+     "Every road and gully modelled in 3D and run under heavy rain, so standing water shows up before the inspector finds it.",
+     "flow-model", None),
     ("garden-surveys.html", "Garden surveys",
      "Levels, walls, steps, trees and drains surveyed for garden designers, landscapers and homeowners.",
      "garden-scan", "garden-survey-cost.html"),
@@ -400,6 +403,8 @@ def main():
     shutil.copytree(ROOT / "images", OUT / "images")
     if (SRC / "downloads").exists():
         shutil.copytree(SRC / "downloads", OUT / "downloads")
+    if (SRC / "demos").exists():
+        shutil.copytree(SRC / "demos", OUT / "demos")
     for f in (SRC / "static").iterdir():
         shutil.copy(f, OUT / f.name)
     urls = []
