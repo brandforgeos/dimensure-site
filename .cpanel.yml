@@ -1,0 +1,11 @@
+---
+# HostGator (cPanel Git) deployment for the Dimensure Portal (app.dimensure.co.uk).
+# Only the built app and the two mail scripts are in this branch; the app source lives in a private repo.
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home1/sufktgte/public_html/app.dimensure.co.uk/
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -Rf app/. $DEPLOYPATH
+    - /bin/mkdir -p /home1/sufktgte/dimensure-portal
+    - /bin/cp -f private/inbound.php /home1/sufktgte/dimensure-portal/inbound.php
+    - /bin/chmod 755 /home1/sufktgte/dimensure-portal/inbound.php
