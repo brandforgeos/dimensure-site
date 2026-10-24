@@ -3,9 +3,9 @@
 /*
  * Dimensure Portal — incoming mail pipe.
  * The dimensure.co.uk catch-all pipes mail here. Only project addresses (dim-1234@dimensure.co.uk)
- * are passed to the portal; everything else is dropped quietly. A copy of every accepted email is
+ * are passed to the portal; anything else bounces ("No Such User Here"), exactly as before. A copy of every accepted email is
  * forwarded to surveys@ so it is also in the normal inbox.
- * Must print nothing: any output becomes a bounce.
+ * For project mail it must print nothing: any output becomes a bounce.
  */
 declare(strict_types=1);
 error_reporting(0);
@@ -25,7 +25,7 @@ foreach (explode("\r\n", $head) as $line) {
         }
     }
 }
-if (!$targets) exit(0);   // not a project address — drop
+if (!$targets) { fwrite(STDOUT, "No Such User Here\n"); exit(1); }   // not a project address — bounce, as before
 
 $ch = curl_init($cfg['inbound_url']);
 curl_setopt_array($ch, [
