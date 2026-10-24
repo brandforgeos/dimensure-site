@@ -11,7 +11,9 @@ declare(strict_types=1);
 error_reporting(0);
 $cfg = require __DIR__ . '/config.php';
 
-$raw = stream_get_contents(STDIN);
+// /usr/bin/php on this host is the CGI build: no STDIN/STDOUT constants
+$in = fopen('php://stdin', 'r');
+$raw = $in ? stream_get_contents($in) : false;
 if ($raw === false || $raw === '' || strlen($raw) > 40 * 1024 * 1024) exit(0);
 
 // Which addresses was it sent to? (envelope recipient is not available, so read the headers)
@@ -25,7 +27,7 @@ foreach (explode("\r\n", $head) as $line) {
         }
     }
 }
-if (!$targets) { fwrite(STDOUT, "No Such User Here\n"); exit(1); }   // not a project address — bounce, as before
+if (!$targets) { echo "No Such User Here\n"; exit(1); }   // not a project address — bounce, as before
 
 $ch = curl_init($cfg['inbound_url']);
 curl_setopt_array($ch, [
