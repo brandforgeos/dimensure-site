@@ -35,6 +35,8 @@ $fromAddr = $cfg['from_address'];
 $fromName = $clean($in['from_name'] ?? 'Dimensure');
 $replyTo = $clean($in['reply_to'] ?? $fromAddr);
 if (!$isEmail($replyTo)) $replyTo = $fromAddr;
+// project addresses are delivered through the portal mailbox's plus-address: dim-1001@ -> portal+dim-1001@
+$replyTo = preg_replace('/^(dim-\d{3,6})@dimensure\.co\.uk$/i', 'portal+$1@dimensure.co.uk', $replyTo);
 $html = (string)($in['html'] ?? '');
 $text = (string)($in['text'] ?? strip_tags($html));
 $messageId = '<' . bin2hex(random_bytes(12)) . '@dimensure.co.uk>';
