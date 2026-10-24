@@ -56,6 +56,30 @@ SERVICES = [
     ("garden-surveys.html", "Garden surveys",
      "Levels, walls, steps, trees and drains surveyed for garden designers, landscapers and homeowners.",
      "garden-scan", "garden-survey-cost.html"),
+    ("drone-surveys.html", "Drone surveys",
+     "Aerial mapping tied to RTK GNSS control: scaled orthophotos, levels and contours for whole sites.",
+     "drone-survey", "drone-survey-cost.html"),
+    ("stockpile-volume-surveys.html", "Stockpile volume surveys",
+     "Every heap of stone, topsoil and spoil measured by drone, in cubic metres and tonnes.",
+     "stockpile-survey", "stockpile-survey-cost.html"),
+    ("earthworks-volume-surveys.html", "Earthworks volume surveys",
+     "Cut and fill against design or a previous survey, topsoil strip depths and muck-shift checks.",
+     "earthworks-survey", "earthworks-survey-cost.html"),
+    ("site-progress-surveys.html", "Site progress surveys",
+     "Monthly drone records of the whole site, compared with last month, for valuations and reports.",
+     "site-progress", "site-progress-survey-cost.html"),
+    ("setting-out.html", "GNSS setting out",
+     "Site control on Ordnance Survey grid, and pegs for earthworks, drainage, roads and plots.",
+     "gnss-setting-out", "setting-out-cost.html"),
+    ("as-laid-service-surveys.html", "As-laid service surveys",
+     "Drainage, chambers and ducts recorded in the open trench, with levels and photos, before backfill.",
+     "as-laid-survey", "as-laid-survey-cost.html"),
+    ("condition-surveys.html", "Pre-start condition surveys",
+     "Roads, kerbs, walls and neighbouring buildings recorded by scan, drone and photo before work starts.",
+     "condition-survey", "condition-survey-cost.html"),
+    ("drone-roof-surveys.html", "Drone roof surveys",
+     "Close-up roof inspections without scaffold, with measured roof areas and pitches if needed.",
+     "roof-survey", "roof-survey-cost.html"),
     ("survey-data-reporting.html", "Reporting from your survey data",
      "Already have a scan or your engineer's levels? We process your data and report against design, no visit needed.",
      "report-tablet", None),
@@ -71,6 +95,14 @@ COST_LABEL = {
     "as-built-survey-cost.html": "As-built survey cost",
     "floor-flatness-survey-cost.html": "Floor flatness survey cost",
     "groundworks-design-audit-cost.html": "Design audit cost",
+    "drone-survey-cost.html": "Drone survey cost",
+    "stockpile-survey-cost.html": "Stockpile survey cost",
+    "earthworks-survey-cost.html": "Earthworks survey cost",
+    "site-progress-survey-cost.html": "Progress survey cost",
+    "setting-out-cost.html": "Setting out cost",
+    "as-laid-survey-cost.html": "As-laid survey cost",
+    "condition-survey-cost.html": "Condition survey cost",
+    "roof-survey-cost.html": "Roof survey cost",
 }
 
 AREAS = [
@@ -212,7 +244,7 @@ def footer():
 <li><a href="case-studies.html">Case studies</a></li><li><a href="how-it-works.html">How it works</a></li><li><a href="about.html">About Dimensure</a></li>
 <li><a href="faq.html">FAQ</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
 </div>
-<p class="legal">&copy; {datetime.date.today().year} Dimensure. Laser scan surveys, measured building surveys, topographical and construction QC surveys across the Midlands and the UK.</p>
+<p class="legal">&copy; {datetime.date.today().year} Dimensure. Laser scan, drone and GNSS surveys: measured building, topographical, volume, setting out and construction QC surveys across the Midlands and the UK.</p>
 </div></footer>
 <a class="mobile-bar" href="contact.html">Get a fixed price</a>'''
 
@@ -229,7 +261,8 @@ def org_schema():
         "slogan": SITE["tagline"],
         "description": ("Laser scan survey company: measured building surveys, topographical and garden level surveys, "
                         "road and sub-base level surveys, tarmac depth surveys, plot and oversite as-built surveys "
-                        "and groundworks design audits, "
+                        "groundworks design audits, drone surveys, stockpile and earthworks volume surveys, construction progress surveys, "
+                        "RTK GNSS setting out, as-laid drainage and duct records, pre-start condition surveys and drone roof surveys, "
                         "plus QC reporting from survey data supplied by the client's own engineer."),
         "address": {"@type": "PostalAddress", "addressLocality": "Corby",
                     "addressRegion": "Northamptonshire", "addressCountry": "GB"},
@@ -237,7 +270,10 @@ def org_schema():
         "knowsAbout": ["Groundworks design review", "Terrestrial laser scanning", "Point cloud surveys", "Sub-base level checks",
                        "Asphalt layer thickness verification", "Slab flatness surveys",
                        "Measured building surveys", "Topographical surveys", "Garden level surveys", "As-built surveys", "Laser scan surveys", "3D laser scanning", "Groundworks quality control",
-                       "Point cloud processing", "Survey data QC reporting"],
+                       "Point cloud processing", "Survey data QC reporting",
+                       "Drone surveys", "Aerial photogrammetry", "Orthophotos", "Stockpile volume measurement",
+                       "Cut and fill earthworks surveys", "Construction progress monitoring", "RTK GNSS surveying",
+                       "Construction setting out", "As-laid drainage records", "Schedules of condition", "Drone roof inspections"],
         "openingHoursSpecification": {"@type": "OpeningHoursSpecification",
                                       "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
                                       "opens": "07:30", "closes": "17:30"},
