@@ -190,7 +190,7 @@ def header(active):
 <a class="brand" href="index.html" aria-label="Dimensure home">{LOGO}</a>
 <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Open menu">
 <label for="nav-toggle" class="nav-btn" aria-hidden="true"><span></span><span></span><span></span></label>
-<nav class="nav" aria-label="Main"><ul>{nav(active)}</ul>
+<nav class="nav" aria-label="Main"><ul>{nav(active)}<li><a href="https://app.dimensure.co.uk/login" rel="nofollow">Client login</a></li></ul>
 <a class="btn small" href="contact.html">Get a price</a></nav>
 </div></header>'''
 
