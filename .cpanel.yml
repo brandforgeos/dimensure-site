@@ -1,7 +1,10 @@
 ---
 # HostGator (cPanel Git) deployment: copies the built site into the dimensure.co.uk web root.
+# Client flow models (unlisted links) are copied to app.dimensure.co.uk/models/.
 deployment:
   tasks:
     - export DEPLOYPATH=/home1/sufktgte/public_html/dimensure.co.uk/
     - /bin/mkdir -p $DEPLOYPATH
     - /bin/cp -Rf site/. $DEPLOYPATH
+    - /bin/mkdir -p /home1/sufktgte/public_html/app.dimensure.co.uk/models
+    - /bin/cp -Rf models/. /home1/sufktgte/public_html/app.dimensure.co.uk/models/
