@@ -2,6 +2,7 @@
 Options -Indexes
 AddType application/javascript .mjs
 AddType font/woff .woff
+AddType application/manifest+json .webmanifest
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteCond %{HTTPS} off
@@ -23,5 +24,11 @@ AddType font/woff .woff
   </FilesMatch>
   <FilesMatch "index\.html$">
     Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "^(sw\.js|manifest\.webmanifest)$">
+    Header set Cache-Control "no-cache"
+    Header set Service-Worker-Allowed "/"
   </FilesMatch>
 </IfModule>
