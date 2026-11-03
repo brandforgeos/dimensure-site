@@ -50,6 +50,11 @@ $lead = [
     'location' => $f('location', 120),
     'message'  => $f('message', 4000),
     'page'     => $f('page', 200),
+    'heard_about'  => $f('heard_about', 80),
+    'found_first'  => $f('found_first', 400),
+    'found_latest' => $f('found_latest', 400),
+    'found_visits' => $f('found_visits', 6),
+    'found_pages'  => $f('found_pages', 6),
 ];
 
 if ($lead['name'] === '' || $lead['message'] === '' || !filter_var($lead['email'], FILTER_VALIDATE_EMAIL)) {
@@ -78,12 +83,17 @@ $labels = [
     'name' => 'Name', 'company' => 'Company', 'email' => 'Email', 'phone' => 'Phone',
     'service' => 'Service', 'location' => 'Site town or postcode', 'message' => 'Message',
     'page' => 'Sent from page', 'received' => 'Received (UTC)',
+    'heard_about' => 'They said they found us through', 'found_first' => 'First visit', 'found_latest' => 'Latest visit',
 ];
 $body = "New enquiry from the Dimensure website.\n\nReply to this email to answer them directly.\n\n";
 foreach ($labels as $k => $label) {
     if ($lead[$k] !== '') {
         $body .= $k === 'message' ? "\n$label:\n{$lead[$k]}\n\n" : "$label: {$lead[$k]}\n";
     }
+}
+
+if ($lead['found_first'] !== '') {
+    $body .= 'Visits: ' . ($lead['found_visits'] ?: '1') . ', pages viewed: ' . ($lead['found_pages'] ?: '1') . "\n";
 }
 
 $subject = 'Website enquiry: ' . $oneLine($lead['service'] ?: 'General') . ' - ' . $oneLine($lead['name']);

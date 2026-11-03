@@ -375,6 +375,7 @@ def page(slug, meta, body):
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 {FONT_LINK}
 <link rel="stylesheet" href="assets/site.css">
+<script src="assets/found.js" defer></script>
 <script type="application/ld+json">{build_schema(meta, slug)}</script>
 </head>
 <body class="{meta.get("body_class", "")}">

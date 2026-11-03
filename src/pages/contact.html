@@ -40,6 +40,8 @@
       </select></div>
      <div><label for="location">Site town or postcode</label><input id="location" name="location" autocomplete="postal-code"></div>
     </div>
+    <div><label for="heard_about">How did you hear about us? <span class="note">(optional)</span></label>
+     <select id="heard_about" name="heard_about"><option value="">Please choose</option><option>Google search</option><option>Bing or another search engine</option><option>ChatGPT or another AI assistant</option><option>LinkedIn</option><option>Recommended by a colleague or client</option><option>Used you before</option><option>Saw us on site</option><option>Other</option></select></div>
     <div><label for="message">What needs checking or surveying?</label><textarea id="message" name="message" placeholder="E.g. 250 m estate road at sub-base, need it checked before binder next Thursday. Or: kitchen-diner in a 1930s semi, need plans and elevations for a kitchen designer." required></textarea></div>
     <p class="note" style="margin:0">Drawings can be emailed to {{EMAIL}} after you send this. We use your details only to reply to your enquiry; see our <a href="privacy.html">privacy notice</a>.</p>
     <button class="btn" type="submit">Send enquiry</button>
@@ -51,7 +53,8 @@
      f.addEventListener('submit',function(e){
        e.preventDefault();
        b.disabled=true;b.textContent='Sending...';st.hidden=true;
-       fetch(f.action,{method:'POST',body:new FormData(f)})
+       var fd=new FormData(f);try{var fv=window.foundVia?window.foundVia():{};for(var k in fv){if(fv[k])fd.append(k,fv[k]);}}catch(x){}
+       fetch(f.action,{method:'POST',body:fd})
          .then(function(r){return r.json();})
          .then(function(j){
            if(!j.ok)throw new Error('send');
