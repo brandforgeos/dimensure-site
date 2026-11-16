@@ -412,7 +412,8 @@ def main():
         body = raw[m.end():]
         slug = p.name
         meta["_slug"] = slug
-        (OUT / slug).write_text(page(slug, meta, body))
+        # Homepage links point at the clean root URL, never /index.html
+        (OUT / slug).write_text(page(slug, meta, body).replace('href="index.html"', 'href="/"'))
         if not meta.get("noindex"):
             urls.append((slug, meta.get("priority", "0.7")))
             llms_pages.append((slug, meta["title"], meta["description"]))
