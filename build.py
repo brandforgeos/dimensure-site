@@ -107,6 +107,15 @@ SERVICES = [
     ("arena-level-surveys.html", "Arena & pitch level surveys",
      "Riding arenas, manèges and pitches: high and low spots, falls and surface depth.",
      "garden-scan", "arena-survey-cost.html"),
+    ("kitchen-joinery-surveys.html", "Kitchen & joinery surveys",
+     "Every wall, angle and slope measured for kitchen designers, stair makers and joiners.",
+     "interior-scan", "kitchen-joinery-survey-cost.html"),
+    ("extension-loft-surveys.html", "Extension & loft surveys",
+     "Existing plans, elevations, roof sections and levels for extensions and loft conversions.",
+     "interior-scan", "extension-loft-survey-cost.html"),
+    ("scan-to-cad.html", "Scan to CAD",
+     "Send us your point cloud and we draw plans, elevations, sections or a topo. No site visit.",
+     "pointcloud-road", "scan-to-cad-cost.html"),
 ]
 
 COST_LABEL = {
@@ -135,6 +144,9 @@ COST_LABEL = {
     "lease-plan-survey-cost.html": "Lease plan cost",
     "road-adoption-survey-cost.html": "Road adoption survey cost",
     "arena-survey-cost.html": "Arena survey cost",
+    "kitchen-joinery-survey-cost.html": "Kitchen survey cost",
+    "extension-loft-survey-cost.html": "Extension survey cost",
+    "scan-to-cad-cost.html": "Scan to CAD cost",
 }
 
 AREAS = [
@@ -155,6 +167,10 @@ TOWNS = [
     ("surveys-oakham-uppingham.html", "Oakham & Uppingham"),
     ("surveys-market-harborough.html", "Market Harborough"),
     ("surveys-bedford.html", "Bedford"),
+    ("surveys-daventry-towcester.html", "Daventry & Towcester"),
+    ("surveys-melton-mowbray.html", "Melton Mowbray"),
+    ("surveys-st-neots-huntingdon.html", "St Neots & Huntingdon"),
+    ("surveys-desborough-rothwell.html", "Desborough & Rothwell"),
     ("surveys-london.html", "London (specialist work)"),
 ]
 
@@ -163,7 +179,8 @@ AREA_SERVED = ["Corby", "Kettering", "Wellingborough", "Northampton", "Milton Ke
                "Uppingham", "Northamptonshire", "Leicestershire", "Rutland",
                "Buckinghamshire", "Cambridgeshire", "Lincolnshire", "Coventry", "Nottingham",
                "Bedford", "Cambridge", "Stony Stratford", "Wolverton", "Newport Pagnell",
-               "Olney", "Bletchley", "Rushden", "Oundle", "Thrapston", "London", "East Midlands", "West Midlands", "United Kingdom"]
+               "Olney", "Bletchley", "Rushden", "Oundle", "Thrapston", "Daventry", "Towcester",
+               "Melton Mowbray", "St Neots", "Huntingdon", "Desborough", "Rothwell", "London", "East Midlands", "West Midlands", "United Kingdom"]
 
 FONT_LINK = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
              '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
@@ -309,7 +326,8 @@ def org_schema():
                         "groundworks design audits, drone surveys, stockpile and earthworks volume surveys, construction progress surveys, "
                         "RTK GNSS setting out, as-laid drainage and duct records, pre-start condition surveys and drone roof surveys, "
                         "point cloud surveys, floor level surveys, wall verticality surveys, non-intrusive vault and cellar surveys, "
-                        "barn conversion and listed building surveys, lease plan surveys, road adoption surveys and arena level surveys, "
+                        "barn conversion and listed building surveys, lease plan surveys, road adoption surveys, arena level surveys, "
+                        "kitchen and joinery surveys, extension and loft conversion surveys, scan to CAD drafting, "
                         "plus QC reporting from survey data supplied by the client's own engineer."),
         "address": {"@type": "PostalAddress", "addressLocality": "Corby",
                     "addressRegion": "Northamptonshire", "addressCountry": "GB"},
@@ -323,7 +341,8 @@ def org_schema():
                        "Construction setting out", "As-laid drainage records", "Schedules of condition", "Drone roof inspections",
                        "Floor level surveys", "Wall verticality surveys", "Vault and cellar surveys", "Historic building measured surveys",
                        "Barn conversion surveys", "Lease plans", "RICS floor area measurement", "Section 38 road adoption",
-                       "Equestrian arena level surveys", "BS 8204 surface regularity"],
+                       "Equestrian arena level surveys", "BS 8204 surface regularity",
+                       "Kitchen and joinery measured surveys", "Loft conversion surveys", "Scan to CAD"],
         "openingHoursSpecification": {"@type": "OpeningHoursSpecification",
                                       "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
                                       "opens": "08:00", "closes": "17:00"},
