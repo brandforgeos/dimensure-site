@@ -83,6 +83,30 @@ SERVICES = [
     ("survey-data-reporting.html", "Reporting from your survey data",
      "Already have a scan or your engineer's levels? We process your data and report against design, no visit needed.",
      "report-tablet", None),
+    ("point-cloud-surveys.html", "Point cloud surveys",
+     "Registered laser scan data in E57, RCP or LAS for architects and engineers who draw their own.",
+     "pointcloud-road", "point-cloud-survey-cost.html"),
+    ("floor-level-surveys.html", "Floor level surveys",
+     "Every floor in a house mapped as levels and contours, for engineers, subsidence and sloping floors.",
+     "interior-scan", "floor-level-survey-cost.html"),
+    ("wall-verticality-surveys.html", "Wall verticality surveys",
+     "Leaning and bulging walls mapped against vertical, with repeat surveys to monitor movement.",
+     "interior-scan", "wall-survey-cost.html"),
+    ("vault-cellar-surveys.html", "Vault & cellar surveys",
+     "Vaults, cellars and voids exposed during works, measured from the opening without disturbing them.",
+     "pointcloud-road", "vault-cellar-survey-cost.html"),
+    ("barn-conversion-surveys.html", "Barn & listed building surveys",
+     "Barns and historic buildings drawn as they really stand: true walls, leans and roof lines.",
+     "interior-scan", "barn-conversion-survey-cost.html"),
+    ("lease-plan-surveys.html", "Lease plan surveys",
+     "Scaled lease plans to HM Land Registry requirements, with GIA or NIA floor areas.",
+     "interior-scan", "lease-plan-survey-cost.html"),
+    ("road-adoption-surveys.html", "Road adoption surveys",
+     "Section 38 pre-adoption checks of falls, ponding, kerbs and ironwork before the council inspects.",
+     "road-tarmac-scan", "road-adoption-survey-cost.html"),
+    ("arena-level-surveys.html", "Arena & pitch level surveys",
+     "Riding arenas, manèges and pitches: high and low spots, falls and surface depth.",
+     "garden-scan", "arena-survey-cost.html"),
 ]
 
 COST_LABEL = {
@@ -103,6 +127,14 @@ COST_LABEL = {
     "as-laid-survey-cost.html": "As-laid survey cost",
     "condition-survey-cost.html": "Condition survey cost",
     "roof-survey-cost.html": "Roof survey cost",
+    "point-cloud-survey-cost.html": "Point cloud survey cost",
+    "floor-level-survey-cost.html": "Floor level survey cost",
+    "wall-survey-cost.html": "Wall survey cost",
+    "vault-cellar-survey-cost.html": "Vault & cellar survey cost",
+    "barn-conversion-survey-cost.html": "Barn conversion survey cost",
+    "lease-plan-survey-cost.html": "Lease plan cost",
+    "road-adoption-survey-cost.html": "Road adoption survey cost",
+    "arena-survey-cost.html": "Arena survey cost",
 }
 
 AREAS = [
@@ -114,11 +146,24 @@ AREAS = [
     ("surveys-rutland.html", "Rutland"),
 ]
 
+TOWNS = [
+    ("surveys-stony-stratford-wolverton.html", "Stony Stratford & Wolverton"),
+    ("surveys-newport-pagnell-olney.html", "Newport Pagnell & Olney"),
+    ("surveys-bletchley.html", "Bletchley"),
+    ("surveys-wellingborough-rushden.html", "Wellingborough & Rushden"),
+    ("surveys-oundle-thrapston.html", "Oundle & Thrapston"),
+    ("surveys-oakham-uppingham.html", "Oakham & Uppingham"),
+    ("surveys-market-harborough.html", "Market Harborough"),
+    ("surveys-bedford.html", "Bedford"),
+    ("surveys-london.html", "London (specialist work)"),
+]
+
 AREA_SERVED = ["Corby", "Kettering", "Wellingborough", "Northampton", "Milton Keynes",
                "Leicester", "Market Harborough", "Peterborough", "Stamford", "Oakham",
                "Uppingham", "Northamptonshire", "Leicestershire", "Rutland",
                "Buckinghamshire", "Cambridgeshire", "Lincolnshire", "Coventry", "Nottingham",
-               "Bedford", "Cambridge", "East Midlands", "West Midlands", "United Kingdom"]
+               "Bedford", "Cambridge", "Stony Stratford", "Wolverton", "Newport Pagnell",
+               "Olney", "Bletchley", "Rushden", "Oundle", "Thrapston", "London", "East Midlands", "West Midlands", "United Kingdom"]
 
 FONT_LINK = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
              '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
@@ -159,7 +204,7 @@ def service_cards(exclude=None, heading_level="h3"):
 
 def area_links(current=None):
     return '<ul class="pill-list">' + "".join(
-        f'<li><a href="{s}">{n}</a></li>' for s, n in AREAS if s != current) + '</ul>'
+        f'<li><a href="{s}">{esc(n)}</a></li>' for s, n in AREAS + TOWNS if s != current) + '</ul>'
 
 
 def cost_links():
@@ -230,7 +275,7 @@ def header(active):
 def footer():
     svc = "".join(f'<li><a href="{s}">{n}</a></li>' for s, n, *_ in SERVICES)
     cst = "".join(f'<li><a href="{c}">{COST_LABEL[c]}</a></li>' for *_, c in SERVICES if c)
-    ars = "".join(f'<li><a href="{s}">Surveys in {n}</a></li>' for s, n in AREAS)
+    ars = "".join(f'<li><a href="{s}">Surveys in {esc(n)}</a></li>' for s, n in AREAS + [TOWNS[-1]])
     return f'''<footer class="site-footer"><div class="wrap">
 <div class="foot-top"><a class="brand" href="index.html" aria-label="Dimensure home">{LOGO}</a>
 <p class="foot-tag">{SITE["tagline"]}</p></div>
@@ -263,6 +308,8 @@ def org_schema():
                         "road and sub-base level surveys, tarmac depth surveys, plot and oversite as-built surveys "
                         "groundworks design audits, drone surveys, stockpile and earthworks volume surveys, construction progress surveys, "
                         "RTK GNSS setting out, as-laid drainage and duct records, pre-start condition surveys and drone roof surveys, "
+                        "point cloud surveys, floor level surveys, wall verticality surveys, non-intrusive vault and cellar surveys, "
+                        "barn conversion and listed building surveys, lease plan surveys, road adoption surveys and arena level surveys, "
                         "plus QC reporting from survey data supplied by the client's own engineer."),
         "address": {"@type": "PostalAddress", "addressLocality": "Corby",
                     "addressRegion": "Northamptonshire", "addressCountry": "GB"},
@@ -273,10 +320,13 @@ def org_schema():
                        "Point cloud processing", "Survey data QC reporting",
                        "Drone surveys", "Aerial photogrammetry", "Orthophotos", "Stockpile volume measurement",
                        "Cut and fill earthworks surveys", "Construction progress monitoring", "RTK GNSS surveying",
-                       "Construction setting out", "As-laid drainage records", "Schedules of condition", "Drone roof inspections"],
+                       "Construction setting out", "As-laid drainage records", "Schedules of condition", "Drone roof inspections",
+                       "Floor level surveys", "Wall verticality surveys", "Vault and cellar surveys", "Historic building measured surveys",
+                       "Barn conversion surveys", "Lease plans", "RICS floor area measurement", "Section 38 road adoption",
+                       "Equestrian arena level surveys", "BS 8204 surface regularity"],
         "openingHoursSpecification": {"@type": "OpeningHoursSpecification",
-                                      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                                      "opens": "07:30", "closes": "17:30"},
+                                      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                                      "opens": "08:00", "closes": "17:00"},
         "priceRange": "££",
     }
 
@@ -434,7 +484,8 @@ def main():
     llms = (SRC / "llms-intro.md").read_text().replace("{{EMAIL}}", SITE["email"])
     groups = [("Services", [s for s, *_ in SERVICES] + ["services.html"]),
               ("Prices", [c for *_, c in SERVICES if c] + ["prices.html"]),
-              ("Areas", [s for s, _ in AREAS] + ["areas.html"]),
+              ("Areas", [s for s, _ in AREAS + TOWNS] + ["areas.html"]),
+              ("Guides", ["screed-surveys-sr1-sr2-sr3.html"]),
               ("Case studies", ["case-studies.html", "case-study-missing-road-gullies.html", "case-study-tarmac-thickness.html"])]
     used = set()
     for title, slugs in groups:
