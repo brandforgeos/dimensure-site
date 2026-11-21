@@ -2,7 +2,7 @@
 <?php
 /*
  * Dimensure Portal — incoming mail pipe.
- * The dimensure.co.uk catch-all pipes mail here. Only project addresses (dim-1234@dimensure.co.uk)
+ * portal@reply.dimensure.co.uk (and, before the move to Titan, the dimensure.co.uk catch-all) pipes mail here. Only project addresses (dim-1234@dimensure.co.uk)
  * are passed to the portal; anything else bounces ("No Such User Here"), exactly as before. A copy of every accepted email is
  * forwarded to surveys@ so it is also in the normal inbox.
  * For project mail it must print nothing: any output becomes a bounce.
@@ -22,7 +22,7 @@ $head = preg_replace("/\r\n[ \t]+/", ' ', $head);
 $targets = [];
 foreach (explode("\r\n", $head) as $line) {
     if (preg_match('/^(to|cc|delivered-to|x-original-to|envelope-to):(.*)$/i', $line, $m)) {
-        if (preg_match_all('/dim-(\d{3,6})@dimensure\.co\.uk/i', $m[2], $mm)) {
+        if (preg_match_all('/dim-(\d{3,6})@(?:reply\.)?dimensure\.co\.uk/i', $m[2], $mm)) {
             foreach ($mm[1] as $n) $targets['DIM-' . $n] = true;
         }
     }
