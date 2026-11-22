@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Dimensure sample reports</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: calm, technical, like a surveyor's issue sheet
+   IDEA: a drawing-issue folder — each report is a sheet you lift out and read
+   PICTURE: the live 3D flow model card plus real first pages of each report
+   COLOUR and TYPE: Dimensure navy #071820, mint #8ED8BF, paper white; Barlow Semi Condensed + IBM Plex Sans
+   LAYOUT: navy band with logo, model card, then a grid of report sheets; tap a sheet to read every page */
+:root{color-scheme:light dark;--bg:light-dark(#F4F7F6,#0b1a21);--card:light-dark(#fff,#10242d);--ink:light-dark(#0B222C,#EAF1EF);--muted:light-dark(#3E5560,#A9BDB8);--line:light-dark(#dbe4e1,#22353D);--navy:#071820;--mint:#8ED8BF;--dash:#4E8C80}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "IBM Plex Sans",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Barlow Semi Condensed",system-ui,sans-serif;font-weight:700;line-height:1.08;text-wrap:balance;margin:0}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}
+.wrap{max-width:1180px;margin:0 auto}
+header{background:var(--navy);color:#F2F5F4;position:relative;overflow:hidden}
+header::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 79px,rgba(142,216,191,.06) 79px 80px),repeating-linear-gradient(0deg,transparent 0 79px,rgba(142,216,191,.06) 79px 80px);pointer-events:none}
+header .wrap{position:relative;z-index:1}
+.logo{width:min(340px,70vw);height:auto;display:block;margin-bottom:28px}
+header h1{font-size:clamp(32px,5vw,50px)}
+header p{color:#A9BDB8;max-width:62ch;margin:12px 0 0;font-size:17px}
+.model{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:0;background:var(--navy);color:#F2F5F4;border-radius:14px;overflow:hidden;text-decoration:none;margin-top:-8px;box-shadow:0 10px 30px rgba(7,24,32,.25)}
+.model .art{position:relative;min-height:260px;background:radial-gradient(120% 90% at 30% 20%,#12313c,#071820)}
+.model svg{position:absolute;inset:0;width:100%;height:100%}
+.model .txt{padding:clamp(22px,3vw,36px);display:flex;flex-direction:column;justify-content:center;gap:10px}
+.model h2{font-size:clamp(26px,3.2vw,36px)}
+.model p{margin:0;color:#A9BDB8}
+.tag{font-size:13px;color:var(--mint);font-weight:600}
+.btn{align-self:flex-start;margin-top:8px;background:var(--mint);color:var(--navy);font-weight:600;padding:12px 18px;border-radius:8px;min-height:44px;display:inline-flex;align-items:center}
+.model:hover .btn,.model:focus-visible .btn{background:#fff}
+.model:focus-visible,.sheet:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+h2.sec{font-size:clamp(24px,3vw,32px);margin:clamp(32px,4vw,48px) 0 6px}
+.sub{color:var(--muted);margin:0 0 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:20px}
+.sheet{all:unset;cursor:pointer;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s}
+.sheet:hover{transform:translateY(-3px)}
+.thumb{background:#fff;aspect-ratio:1.414/1;overflow:hidden;border-bottom:1px solid var(--line)}
+.thumb img{width:100%;display:block}
+.sheet .b{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.sheet h3{font-size:22px}
+.sheet p{margin:0;color:var(--muted);font-size:15px}
+.meta{margin-top:auto;padding-top:8px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.meta b{color:var(--dash);font-weight:600}
+.note{color:var(--muted);font-size:14px;border-top:1px solid var(--line);margin-top:40px;padding-top:18px}
+/* reader */
+#reader{position:fixed;inset:0;background:rgba(7,24,32,.96);z-index:50;display:none;flex-direction:column}
+#reader.on{display:flex}
+.rbar{display:flex;align-items:center;gap:12px;padding:10px max(3vw,12px);color:#F2F5F4;border-bottom:1px solid #22353D}
+.rbar h3{font-size:20px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rbar span{color:#A9BDB8;font-size:14px;white-space:nowrap}
+.close{all:unset;cursor:pointer;min-width:44px;min-height:44px;display:grid;place-items:center;border-radius:8px;color:var(--mint);font-size:28px}
+.close:focus-visible{outline:2px solid var(--mint)}
+.pages{overflow-y:auto;flex:1;padding:18px max(3vw,10px) 60px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.pages img{width:100%;max-width:1200px;height:auto;background:#fff;border-radius:4px;box-shadow:0 4px 18px rgba(0,0,0,.4)}
+@media(max-width:760px){.model{grid-template-columns:1fr}.model .art{min-height:200px}}
+@media(prefers-reduced-motion:reduce){.sheet{transition:none}.sheet:hover{transform:none}.drop{display:none}}
+</style>
+</head>
+<body>
+<header class="band">
+  <div class="wrap">
+    <img class="logo" src="logo.png" alt="Dimensure — measured, checked, recorded">
+    <h1>Sample reports and 3D flow model</h1>
+    <p>Example of each survey report Dimensure issues, plus the interactive 3D surface water model. Client, company and site details have been removed from every example.</p>
+  </div>
+</header>
+
+<main class="band" style="padding-top:0">
+  <div class="wrap">
+    <a class="model" href="model.html" style="margin-top:28px">
+      <div class="art" aria-hidden="true">
+        <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+          <defs><linearGradient id="rd" x1="0" x2="1"><stop offset="0" stop-color="#2a3f47"/><stop offset=".5" stop-color="#3b545c"/><stop offset="1" stop-color="#2a3f47"/></linearGradient></defs>
+          <g transform="translate(200 140) skewX(-28) scale(1 .55)">
+            <path d="M-260 -90 C-120 -60 -40 40 60 40 S220 -20 300 10 L300 90 C220 60 150 120 60 120 S-140 20 -260 -10 Z" fill="url(#rd)"/>
+            <path d="M-260 -50 C-120 -20 -40 80 60 80 S220 20 300 50" fill="none" stroke="#8ED8BF" stroke-width="2" stroke-dasharray="8 8" opacity=".6"/>
+            <path d="M-260 -10 C-140 20 -40 120 60 120" fill="none" stroke="#6FB7FF" stroke-width="7" opacity=".55"/>
+            <rect x="-150" y="0" width="16" height="10" fill="#4ade80"/><rect x="40" y="112" width="16" height="10" fill="#F08A6C"/><rect x="200" y="62" width="16" height="10" fill="#4ade80"/>
+            <ellipse cx="48" cy="128" rx="40" ry="12" fill="#6FB7FF" opacity=".5"/>
+          </g>
+          <g fill="#6FB7FF" opacity=".55" class="drop">
+            <rect x="60" y="20" width="1.5" height="12"><animate attributeName="y" from="-10" to="250" dur="1.6s" repeatCount="indefinite"/></rect>
+            <rect x="140" y="40" width="1.5" height="12"><animate attributeName="y" from="-30" to="250" dur="1.3s" repeatCount="indefinite"/></rect>
+            <rect x="230" y="10" width="1.5" height="12"><animate attributeName="y" from="-20" to="250" dur="1.8s" repeatCount="indefinite"/></rect>
+            <rect x="310" y="30" width="1.5" height="12"><animate attributeName="y" from="-40" to="250" dur="1.4s" repeatCount="indefinite"/></rect>
+            <rect x="370" y="5" width="1.5" height="12"><animate attributeName="y" from="-15" to="250" dur="1.7s" repeatCount="indefinite"/></rect>
+          </g>
+        </svg>
+      </div>
+      <div class="txt">
+        <span class="tag">Interactive 3D · works on a phone</span>
+        <h2>Surface Water Flow Model</h2>
+        <p>Every adoptable road on a site at true scale – 13 roads, 96 gullies. Turn on the rain and watch it run off the camber into the channels. Green grates are working; red ones have water standing beside them. Switch to “Gullies at the low points” to see the fix.</p>
+        <span class="btn">Open the 3D model →</span>
+      </div>
+    </a>
+
+    <h2 class="sec">Survey reports</h2>
+    <p class="sub">Tap a report to read every page.</p>
+    <div class="grid" id="grid"></div>
+
+    <p class="note">© 2026 Dimensure. Example reports and model shown as demonstrations only — client and site details removed. Not to be copied, altered or relied on for design or construction. dimensure.co.uk</p>
+  </div>
+</main>
+
+<div id="reader" role="dialog" aria-modal="true" aria-labelledby="rt">
+  <div class="rbar"><h3 id="rt"></h3><span id="rp"></span><button class="close" id="rc" aria-label="Close">×</button></div>
+  <div class="pages" id="pages"></div>
+</div>
+
+<script>
+{
+const R=[
+ {id:'demo-01',n:1,pages:6,t:'Road Surfacing Quality Check',s:'Binder course, before the surface course',d:'Binder course and kerbs on two estate roads surveyed before the surface course: surface course needed with planing and regulating quantities, kerb levels and water-holding low points, and covers and gullies checked against the drawings.'},
+ {id:'demo-03',n:3,pages:9,t:'Road Surfacing Quality Check',s:'Base and binder, with laid quantities',d:'Base and binder course on four estate roads checked against the Type 1 survey and the as-laid kerbs: thickness laid and invoiced quantities, recommended cores, levels and their effect, planing and regulating, and covers and gullies.'},
+ {id:'demo-02',n:2,pages:8,t:'Road Formation Quality Check',s:'Type 1 sub-base and kerbs, before the tarmac',d:'Type 1 sub-base and kerbs on five estate roads checked before the tarmac: kerbs against the design, stone levels against the as-laid kerbs, planing and regulating if laid to spec with tarmac quantities, 5 m level tables, and manholes and gullies against the drawings.'},
+ {id:'demo-04',n:4,pages:7,t:'Substructure & Internal Drainage',s:'Plot scan before the floor goes in',d:'One plot of a semi-detached pair checked from a scan before the floor goes in: brickwork and inner leaf against the drawings, rectification, levels and sub-floor void depth, and drainage pipe positions against the services plan.'},
+ {id:'demo-05',n:5,pages:8,t:'Plot / Oversite Quality Check',s:'Plot scan once the floor is down',d:'A detached plot checked from a scan once the floor is down: outside brickwork against the drawing, rectification, brickwork corner levels, floor flatness and level against neighbouring plots, and drainage and water duct positions.'}
+];
+const pg=(n,p)=>`p/d${n}-${String(p).padStart(2,'0')}.webp`;
+const grid=document.getElementById('grid');
+grid.innerHTML=R.map(r=>`<button class="sheet" data-id="${r.id}"><div class="thumb"><img src="${pg(r.n,1)}" alt="First page of the ${r.t} example" loading="lazy"></div><div class="b"><h3>${r.t}</h3><p><strong>${r.s}.</strong> ${r.d}</p><div class="meta"><span>${r.pages} pages</span><b>Read report →</b></div></div></button>`).join('');
+const rd=document.getElementById('reader'),pages=document.getElementById('pages');
+let last=null;
+function open(id){const r=R.find(x=>x.id===id);if(!r){close(false);return}
+ document.getElementById('rt').textContent=r.t+' – '+r.s;
+ document.getElementById('rp').textContent=r.pages+' pages';
+ pages.innerHTML=Array.from({length:r.pages},(_,i)=>`<img src="${pg(r.n,i+1)}" alt="Page ${i+1} of ${r.pages}" loading="${i<2?'eager':'lazy'}">`).join('');
+ pages.scrollTop=0;rd.classList.add('on');document.body.style.overflow='hidden';document.getElementById('rc').focus()}
+function close(h=true){rd.classList.remove('on');document.body.style.overflow='';if(h&&location.hash)history.replaceState(null,'',location.pathname);if(last)last.focus()}
+grid.addEventListener('click',e=>{const b=e.target.closest('.sheet');if(!b)return;last=b;location.hash=b.dataset.id});
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);h?open(h):close(false)});
+document.getElementById('rc').addEventListener('click',()=>close());
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&rd.classList.contains('on'))close()});
+if(location.hash)open(location.hash.slice(1));
+}
+</script>
+</body>
+</html>

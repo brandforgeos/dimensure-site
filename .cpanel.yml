@@ -8,3 +8,5 @@ deployment:
     - /bin/cp -Rf site/. $DEPLOYPATH
     - /bin/mkdir -p /home1/sufktgte/public_html/app.dimensure.co.uk/models
     - /bin/cp -Rf models/. /home1/sufktgte/public_html/app.dimensure.co.uk/models/
+    - /bin/mkdir -p /home1/sufktgte/public_html/app.dimensure.co.uk/samples
+    - /bin/cp -Rf samples/. /home1/sufktgte/public_html/app.dimensure.co.uk/samples/
