@@ -1,0 +1,28 @@
+{
+ "cover": {
+  "title": "Plot / Oversite Quality Check",
+  "subtitle": "Housing development · Phase A · Plot 1",
+  "desc": "House type A (built handed).",
+  "subtop": 128,
+  "meta": [
+   [
+    "Reference",
+    "DEMO-05, issue 1"
+   ],
+   [
+    "Report",
+    "Example report<br>client and site details removed"
+   ],
+   [
+    "Date",
+    "November 2026<br>Scan once the floor is down"
+   ]
+  ]
+ },
+ "foot": [
+  "© 2026 Dimensure. Confidential — example report, client and site details removed. Ref DEMO-05, issue 1.",
+  "Shown as a demonstration only. Not to be copied, altered or shared without Dimensure's written consent; no one may rely on it for design or construction."
+ ],
+ "header_right": "Plot / Oversite Quality Check · Ref DEMO-05",
+ "title_meta": "Plot / Oversite Quality Check – example (DEMO-05)"
+}

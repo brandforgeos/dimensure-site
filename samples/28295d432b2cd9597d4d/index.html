@@ -55,6 +55,8 @@ h2.sec{font-size:clamp(24px,3vw,32px);margin:clamp(32px,4vw,48px) 0 6px}
 .rbar{display:flex;align-items:center;gap:12px;padding:10px max(3vw,12px);color:#F2F5F4;border-bottom:1px solid #22353D}
 .rbar h3{font-size:20px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rbar span{color:#A9BDB8;font-size:14px;white-space:nowrap}
+@media(max-width:600px){.rbar span{display:none}.rbar h3{font-size:17px}}
+.dl{color:var(--navy);background:var(--mint);font-weight:600;font-size:14px;padding:10px 14px;border-radius:8px;text-decoration:none;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}.dl:focus-visible{outline:2px solid #fff}
 .close{all:unset;cursor:pointer;min-width:44px;min-height:44px;display:grid;place-items:center;border-radius:8px;color:var(--mint);font-size:28px}
 .close:focus-visible{outline:2px solid var(--mint)}
 .pages{overflow-y:auto;flex:1;padding:18px max(3vw,10px) 60px;display:flex;flex-direction:column;align-items:center;gap:16px}
@@ -111,27 +113,28 @@ h2.sec{font-size:clamp(24px,3vw,32px);margin:clamp(32px,4vw,48px) 0 6px}
 </main>
 
 <div id="reader" role="dialog" aria-modal="true" aria-labelledby="rt">
-  <div class="rbar"><h3 id="rt"></h3><span id="rp"></span><button class="close" id="rc" aria-label="Close">×</button></div>
+  <div class="rbar"><h3 id="rt"></h3><span id="rp"></span><a class="dl" id="rd" href="#" download>Download PDF</a><button class="close" id="rc" aria-label="Close">×</button></div>
   <div class="pages" id="pages"></div>
 </div>
 
 <script>
 {
 const R=[
- {id:'demo-01',n:1,pages:6,t:'Road Surfacing Quality Check',s:'Binder course, before the surface course',d:'Binder course and kerbs on two estate roads surveyed before the surface course: surface course needed with planing and regulating quantities, kerb levels and water-holding low points, and covers and gullies checked against the drawings.'},
- {id:'demo-03',n:3,pages:9,t:'Road Surfacing Quality Check',s:'Base and binder, with laid quantities',d:'Base and binder course on four estate roads checked against the Type 1 survey and the as-laid kerbs: thickness laid and invoiced quantities, recommended cores, levels and their effect, planing and regulating, and covers and gullies.'},
- {id:'demo-02',n:2,pages:8,t:'Road Formation Quality Check',s:'Type 1 sub-base and kerbs, before the tarmac',d:'Type 1 sub-base and kerbs on five estate roads checked before the tarmac: kerbs against the design, stone levels against the as-laid kerbs, planing and regulating if laid to spec with tarmac quantities, 5 m level tables, and manholes and gullies against the drawings.'},
- {id:'demo-04',n:4,pages:7,t:'Substructure & Internal Drainage',s:'Plot scan before the floor goes in',d:'One plot of a semi-detached pair checked from a scan before the floor goes in: brickwork and inner leaf against the drawings, rectification, levels and sub-floor void depth, and drainage pipe positions against the services plan.'},
- {id:'demo-05',n:5,pages:8,t:'Plot / Oversite Quality Check',s:'Plot scan once the floor is down',d:'A detached plot checked from a scan once the floor is down: outside brickwork against the drawing, rectification, brickwork corner levels, floor flatness and level against neighbouring plots, and drainage and water duct positions.'}
+ {id:'demo-01',n:1,pages:7,t:'Road Surfacing Quality Check',s:'Binder course, before the surface course',d:'Binder course and kerbs on two estate roads surveyed before the surface course: surface course needed with planing and regulating quantities, kerb levels and water-holding low points, and covers and gullies checked against the drawings.'},
+ {id:'demo-03',n:3,pages:10,t:'Road Surfacing Quality Check',s:'Base and binder, with laid quantities',d:'Base and binder course on four estate roads checked against the Type 1 survey and the as-laid kerbs: thickness laid and invoiced quantities, recommended cores, levels and their effect, planing and regulating, and covers and gullies.'},
+ {id:'demo-02',n:2,pages:9,t:'Road Formation Quality Check',s:'Type 1 sub-base and kerbs, before the tarmac',d:'Type 1 sub-base and kerbs on five estate roads checked before the tarmac: kerbs against the design, stone levels against the as-laid kerbs, planing and regulating if laid to spec with tarmac quantities, 5 m level tables, and manholes and gullies against the drawings.'},
+ {id:'demo-04',n:4,pages:8,t:'Substructure & Internal Drainage',s:'Plot scan before the floor goes in',d:'One plot of a semi-detached pair checked from a scan before the floor goes in: brickwork and inner leaf against the drawings, rectification, levels and sub-floor void depth, and drainage pipe positions against the services plan.'},
+ {id:'demo-05',n:5,pages:9,t:'Plot / Oversite Quality Check',s:'Plot scan once the floor is down',d:'A detached plot checked from a scan once the floor is down: outside brickwork against the drawing, rectification, brickwork corner levels, floor flatness and level against neighbouring plots, and drainage and water duct positions.'}
 ];
 const pg=(n,p)=>`p/d${n}-${String(p).padStart(2,'0')}.webp`;
 const grid=document.getElementById('grid');
-grid.innerHTML=R.map(r=>`<button class="sheet" data-id="${r.id}"><div class="thumb"><img src="${pg(r.n,1)}" alt="First page of the ${r.t} example" loading="lazy"></div><div class="b"><h3>${r.t}</h3><p><strong>${r.s}.</strong> ${r.d}</p><div class="meta"><span>${r.pages} pages</span><b>Read report →</b></div></div></button>`).join('');
+grid.innerHTML=R.map(r=>`<button class="sheet" data-id="${r.id}"><div class="thumb"><img src="${pg(r.n,1)}" alt="First page of the ${r.t} example" loading="lazy"></div><div class="b"><h3>${r.t}</h3><p><strong>${r.s}.</strong> ${r.d}</p><div class="meta"><span>${r.pages} pages · PDF</span><b>Read report →</b></div></div></button>`).join('');
 const rd=document.getElementById('reader'),pages=document.getElementById('pages');
 let last=null;
 function open(id){const r=R.find(x=>x.id===id);if(!r){close(false);return}
  document.getElementById('rt').textContent=r.t+' – '+r.s;
  document.getElementById('rp').textContent=r.pages+' pages';
+ const dl=document.getElementById('rd');dl.href='pdf/DEMO-0'+r.n+'.pdf';dl.setAttribute('download','Dimensure - '+r.t.replace('&','and').replace(/\s*\/\s*/g,' and ')+' - example DEMO-0'+r.n+'.pdf');
  pages.innerHTML=Array.from({length:r.pages},(_,i)=>`<img src="${pg(r.n,i+1)}" alt="Page ${i+1} of ${r.pages}" loading="${i<2?'eager':'lazy'}">`).join('');
  pages.scrollTop=0;rd.classList.add('on');document.body.style.overflow='hidden';document.getElementById('rc').focus()}
 function close(h=true){rd.classList.remove('on');document.body.style.overflow='';if(h&&location.hash)history.replaceState(null,'',location.pathname);if(last)last.focus()}
