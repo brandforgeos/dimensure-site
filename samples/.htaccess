@@ -1,4 +1,7 @@
 Options -Indexes
 <IfModule mod_headers.c>
 Header set X-Robots-Tag "noindex, nofollow"
+<FilesMatch "\.(html|pdf)$">
+Header set Cache-Control "no-cache"
+</FilesMatch>
 </IfModule>
