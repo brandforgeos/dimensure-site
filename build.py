@@ -243,10 +243,16 @@ MACROS = {
 
 def cta_block(meta):
     t = meta.get("cta_title", "Book a scan or ask a question")
+    text = meta.get("cta_text", "Send the drawing, the location and when you need it. "
+                                "We reply the same working day with a fixed price.")
+    # Optional per-page buttons: [[label, href], [label, href]]
+    btns = meta.get("cta_buttons") or [["Get a fixed price", "contact.html"],
+                                       [f'Email {SITE["email"]}', f'mailto:{SITE["email"]}']]
+    links = "".join(f'<a class="btn{"" if i == 0 else " ghost"}" href="{h}">{l}</a>'
+                    for i, (l, h) in enumerate(btns))
     return (f'<section class="cta"><div class="wrap cta-in"><div><h2>{t}</h2>'
-            f'<p>Send the drawing, the location and when you need it. We reply the same working day with a fixed price.</p></div>'
-            f'<div class="cta-actions"><a class="btn" href="contact.html">Get a fixed price</a>'
-            f'<a class="btn ghost" href="mailto:{SITE["email"]}">Email {SITE["email"]}</a></div></div></section>')
+            f'<p>{text}</p></div>'
+            f'<div class="cta-actions">{links}</div></div></section>')
 
 
 def viewer_block(kind):
